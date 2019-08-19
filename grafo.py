@@ -10,6 +10,7 @@ class Grafo:
     SEPARADOR_ARESTA = '-'
 
     def __init__(self, N=[], A={}):
+
         '''
         Constrói um objeto do tipo Grafo. Se nenhum parâmetro for passado, cria um Grafo vazio.
         Se houver alguma aresta ou algum vértice inválido, uma exceção é lançada.
@@ -117,7 +118,7 @@ class Grafo:
 
     def vertices_nao_adjacentes(self):
         vertices = self.N
-        arestas = self.A.values()
+        arestas = self.A.values()                       # Se colocar só o ".A" ele vai pegar apenas as chaves do dicionjario
         nao_adjacentes = []
         for i in vertices:
             for j in vertices:
@@ -132,7 +133,7 @@ class Grafo:
     '''
 
     def ha_laco(self):
-        lista_arestas = self.A.values()
+        lista_arestas = self.A.values()       #ao inves de criar uma nova lista, outa forma seria no "FOR" colocar "self.A.values():"
         for i in lista_arestas:
             v1, v2 = i.split(self.SEPARADOR_ARESTA)
             if v1 == v2:
@@ -142,7 +143,50 @@ class Grafo:
     '''
     Questão 3 - Há arestas paralelas? (Retorne True ou False)
     '''
+    def ha_paralelas(self):
+        arestas = list(self.A.values())
+        saida = False
 
+        while len(arestas) >= 1:
+            aux = arestas.pop(0)
+            if (aux[0] + self.SEPARADOR_ARESTA + aux[2]) in arestas or (aux[2] + self.SEPARADOR_ARESTA + aux[0]) in arestas:
+                saida = True
+                break
+
+        return saida
+
+    '''
+    Questão 4 - Qual o grau de um vértice arbitrário?
+    '''
+
+    def grau(self, vertice):                        #quantidade de arestas que incidem num vertice
+         if self.existeVertice(vertice):
+            grau = 0
+            for i in self.A:
+                if vertice in self.A[i]:
+                    grau += 1
+            return grau
+
+    '''
+    Questão 5 - Quais arestas incidem sobre um vértice N arbitrário?
+    '''
+
+    def arestas_sobre_vertice(self, vertice):
+        arestas = []
+        for i in self.A:
+            if (vertice in self.A[i]):
+                arestas.append(i)
+        return arestas
+
+    '''
+    Questao 6 - Esse grafo é completo?
+    '''
+
+
+
+    '''
+    Roteiro 2 - 
+    '''
 
     def __str__(self):
         '''
