@@ -118,7 +118,7 @@ class Grafo:
 
     def vertices_nao_adjacentes(self):
         vertices = self.N
-        arestas = self.A.values()                       # Se colocar só o ".A" ele vai pegar apenas as chaves do dicionjario
+        arestas = self.A.values()   # Se colocar só o ".A" ele vai pegar apenas as chaves do dicionjario
         nao_adjacentes = []
         for i in vertices:
             for j in vertices:
@@ -133,7 +133,7 @@ class Grafo:
     '''
 
     def ha_laco(self):
-        lista_arestas = self.A.values()       #ao inves de criar uma nova lista, outa forma seria no "FOR" colocar "self.A.values():"
+        lista_arestas = self.A.values() #Ao inves de criar uma nova lista, outa forma seria no "FOR" colocar "self.A.values():"
         for i in lista_arestas:
             v1, v2 = i.split(self.SEPARADOR_ARESTA)
             if v1 == v2:
@@ -145,6 +145,7 @@ class Grafo:
     '''
     def ha_paralelas(self):
         arestas = list(self.A.values())
+
         saida = False
 
         while len(arestas) >= 1:
@@ -173,16 +174,33 @@ class Grafo:
 
     def arestas_sobre_vertice(self, vertice):
         arestas = []
-        for i in self.A:
-            if (vertice in self.A[i]):
+        for i in self.A:  #Chaves do dicionario
+            if (vertice in self.A[i]):  #Valores correspondentes a cada chave
                 arestas.append(i)
         return arestas
 
     '''
     Questao 6 - Esse grafo é completo?
     '''
+    def eh_completo(self):
 
+        l_vertices = self.N
+        l_arestas = list(self.A.values())
 
+        for i in range(len(l_arestas)):
+            l_arestas[i] = l_arestas[i].split("-")
+
+        for i in range(len(l_vertices)):
+            l = ["", ""]
+            for y in range(len(l_vertices) - 1 - i):
+                if (l_vertices[i] != l_vertices[y + 1 + i]):
+                    l[0] = l_vertices[i]
+                    l[1] = l_vertices[y + 1 + i]
+                if (l not in l_arestas):
+                    l.reverse()
+                    if (l not in l_arestas):
+                        return False
+        return True
 
     '''
     Roteiro 2 - 
@@ -209,34 +227,5 @@ class Grafo:
                 grafo_str += ", "
 
         return grafo_str
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
